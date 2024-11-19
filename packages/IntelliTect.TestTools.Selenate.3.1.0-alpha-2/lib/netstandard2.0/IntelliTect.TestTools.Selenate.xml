@@ -1,0 +1,450 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IntelliTect.TestTools.Selenate</name>
+    </assembly>
+    <members>
+        <member name="T:IntelliTect.TestTools.Selenate.BrowserType">
+            <summary>
+            Enum representing all supported browser types of <see cref="T:IntelliTect.TestTools.Selenate.WebDriverFactory"/>
+            </summary>
+        </member>
+        <member name="F:IntelliTect.TestTools.Selenate.BrowserType.Chrome">
+            <summary>
+            Use a headed Chrome instance
+            </summary>
+        </member>
+        <member name="F:IntelliTect.TestTools.Selenate.BrowserType.HeadlessChrome">
+            <summary>
+            Use a headless Chrome instance
+            </summary>
+        </member>
+        <member name="F:IntelliTect.TestTools.Selenate.BrowserType.Firefox">
+            <summary>
+            Use a headed Firefox instance
+            </summary>
+        </member>
+        <member name="F:IntelliTect.TestTools.Selenate.BrowserType.Edge">
+            <summary>
+            Use a headed Edge instance
+            </summary>
+        </member>
+        <member name="T:IntelliTect.TestTools.Selenate.DriverHandler">
+            <summary>
+            Class to handle interactions with a Selenium WebDriver
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.#ctor(OpenQA.Selenium.IWebDriver)">
+            <summary>
+            Constructor to wrap a specific instace of a WebDriver
+            </summary>
+            <param name="driver">The WebDriver to wrap</param>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SetTimeout(System.TimeSpan)">
+            <summary>
+            Sets the maximum time that this instance will retry a specific interaction with a WebDriver before throwing.
+            </summary>
+            <param name="timeout">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SetTimeoutSeconds(System.Int32)">
+            <summary>
+            Sets the maximum time in seconds that this instance will retry a specific interaction with a WebDriver before throwing.
+            </summary>
+            <param name="timeoutInSeconds">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SetPollingInterval(System.TimeSpan)">
+            <summary>
+            Sets the amount of time this instance will wait in between retrying a specific interaction.
+            </summary>
+            <param name="pollingInterval">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SetPollingIntervalMilliseconds(System.Int32)">
+            <summary>
+            Sets the amount of time in milliseconds this instance will wait in between retrying a specific interaction.
+            </summary>
+            <param name="pollIntervalInMilliseconds">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SetScreenshotLocation(System.IO.FileInfo)">
+            <summary>
+            Sets the location that will be used for saving a screenshot.
+            </summary>
+            <param name="location">The location to save a screensot of the browser being driven by the current WebDriver</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.NavigateToPage(System.Uri)">
+            <summary>
+            Send the browser being driven by the current WebDriver to a particular URL
+            </summary>
+            <param name="uri">The page to go to by URI</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.NavigateToPage(System.String)">
+            <summary>
+            Send the browser being driven by the current WebDriver to a particular URL
+            </summary>
+            <param name="uri">The page to go to by string</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.FindElement(OpenQA.Selenium.By)">
+            <summary>
+            Create an ElementHandler with the means to interact with a specific element in the browser
+            </summary>
+            <param name="by">The method to find an element</param>
+            <returns>An ElementHandler wrapping interactions with a specific IWebElement</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.FindElements(OpenQA.Selenium.By)">
+            <summary>
+            Create an ElementsHandler with the means to interact with a set of elements in the browser
+            </summary>
+            <param name="by">The method to find a set of elements</param>
+            <returns>An ElementsHandler wrapping interactions with a set of IWebElements</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.GetWindowTitle">
+            <summary>
+            Gets the currently wrapped Driver's window title
+            </summary>
+            <returns>The current window title</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SwitchToWindow(System.String)">
+            <summary>
+            Attempts to switch to the window by title for a certain number of seconds before failing if the switch is unsuccessful
+            </summary>
+            <param name="title">The title of the window to switch to</param>
+            <returns>This driver focused on the new window</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SwitchToAlert">
+            <summary>
+            Checks for a present alert for a certain number of seconds before continuing
+            </summary>
+            <returns>The alert found</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.SwitchToIFrame(OpenQA.Selenium.By[])">
+            <summary>
+            Switches to each frame in succession to avoid having to explicitely call SwitchTo() multipled times for nested frames
+            </summary>
+            <param name="bys">The Selenium selectors to find the frame/iframe desired to interact with</param>
+            <returns>The frame found</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.DriverHandler.TakeScreenshot">
+            <summary>
+            Take a screenshot of the browser and save it to the passed in fully qualified path.
+            Will not throw if the path does not exist.
+            </summary>
+        </member>
+        <member name="T:IntelliTect.TestTools.Selenate.ElementBase">
+            <summary>
+            Base class for ElementHandler and ElementsHandler. <br />
+            Keeps track of a Locator and SearchContext
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementBase.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)">
+            <summary>
+            Instantiate a new ElementBase with a driver and locator
+            </summary>
+            <param name="driver">The IWebDriver to wrap</param>
+            <param name="locator">The By locator to use for finding an element</param>
+        </member>
+        <member name="P:IntelliTect.TestTools.Selenate.ElementBase.Locator">
+            <summary>
+            The locator used to find IWebElements in this handler.
+            </summary>
+        </member>
+        <member name="P:IntelliTect.TestTools.Selenate.ElementBase.SearchContext">
+            <summary>
+            The SearchContext to use when attempting to find an element. <br />
+            By default, it will be the wrapped IWebDriver
+            </summary>
+        </member>
+        <member name="T:IntelliTect.TestTools.Selenate.ElementHandler">
+            <summary>
+            Main class for handling interactions with a specific IWebElement.
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)">
+            <summary>
+            Takes an IWebDriver and a Selenium By locator used for operations with this element.
+            </summary>
+            <param name="driver">The WebDriver to wrap.</param>
+            <param name="locator">Method for locating an element.</param>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)">
+            <summary>
+            Sets the locator to use for operations within this instance.
+            </summary>
+            <param name="by">Method to find an element.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SetTimeout(System.TimeSpan)">
+            <summary>
+            Sets the timeout to use when retrying operations within this instance.
+            </summary>
+            <param name="timeout">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SetTimeoutSeconds(System.Int32)">
+            <summary>
+            Sets the timeout in seconds to use when retrying operations within this instance.
+            </summary>
+            <param name="timeoutInSeconds">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SetPollingInterval(System.TimeSpan)">
+            <summary>
+            Sets the polling interval to use when retrying operations within this instance.
+            </summary>
+            <param name="pollingInterval">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SetPollingIntervalMilliseconds(System.Int32)">
+            <summary>
+            Sets the polling interval in seconds to use when retrying operations within this instance.
+            </summary>
+            <param name="pollIntervalInMilliseconds">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SetSearchContext(OpenQA.Selenium.ISearchContext)">
+            <summary>
+            Overrides the default search context (IWebDriver) with a different SearchContext, E.G. if you need to search a Shadow DOM
+            </summary>
+            <param name="searchContext">The SearchContext to use for all Find calls.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.IgnoreAllWebdriverExceptions(System.Boolean)">
+            <summary>
+            Ignores all exceptions of type WebDriverException when trying operations within this instance. This should be used as sparingly as possible.
+            </summary>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.FindElement(OpenQA.Selenium.By)">
+            <summary>
+            Finds a new element as a child of this element. Returns an ElementHandler for further interactions
+            </summary>
+            <param name="by">The locator to use when finding an element</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.FindElements(OpenQA.Selenium.By)">
+            <summary>
+            Finds a list of elements as a child of this element. Returns an ElementsHandler for further interactions
+            </summary>
+            <param name="by">The locator to use when finding elements</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.Click">
+            <summary>
+            Clicks on the element found by <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/>. Will automatically retry if a known failure occurs.
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.SendKeys(System.String)">
+            <summary>
+            Sends keys to the element found by <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/>. Will automatically retry if a known failure occurs.
+            </summary>
+            <param name="textToSend">Text to send to the element.</param>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.Clear">
+            <summary>
+            Clears text in the element found by <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/>. Will automatically retry if a known failure occurs.
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.GetWebElement">
+            <summary>
+            Finds and returns the element found by <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/>.
+            Subsequent actions will not automatically retry on the returned IWebElement.
+            </summary>
+            <returns>The IWebElement found.</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.Text">
+            <summary>
+            Gets the existing text on the element found by locator <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/>. Will automatically retry if a known failure occurs.
+            </summary>
+            <returns>The text associated to the found element.</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.GetAttribute(System.String)">
+            <summary>
+            Gets a specific attribute of the element found by locator <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/>. Will automatically retry if a known failure occurs.
+            </summary>
+            <param name="attributeName">The element attribute to search for.</param>
+            <returns>The value of the found attribute.</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.WaitForDisplayed">
+            <summary>
+            Waits for the element found by locator <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/> to be displayed. Will automatically retry if a known failure occurs.
+            </summary>
+            <returns>True if the element is displayed, false if the the element is not displayed or throws an ElementNotVisible or NoSuchElement exception</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.WaitForNotDisplayed">
+            <summary>
+            Waits for the element found by <see cref="M:IntelliTect.TestTools.Selenate.ElementHandler.SetLocator(OpenQA.Selenium.By)"/> or <seealso cref="M:IntelliTect.TestTools.Selenate.ElementHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)"/> to be NOT displayed.
+            </summary>
+            <returns>True if the element is NOT displayed, false if the the element is displayed or throws an ElementNotVisible or NoSuchElement exception</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.WaitForEnabled">
+            <summary>
+            Waits for the element to be enabled.
+            </summary>
+            <returns>True if the element is enabled, false if the the element is not disabled.</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementHandler.WaitForDisabled">
+            <summary>
+            Waits for the element to be disabled.
+            </summary>
+            <returns>True if the element is disabled, false if the the element is enabled.</returns>
+        </member>
+        <member name="T:IntelliTect.TestTools.Selenate.ElementsHandler">
+            <summary>
+            Main class for handling interactions with a group of IWebElements.
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.#ctor(OpenQA.Selenium.IWebDriver,OpenQA.Selenium.By)">
+            <summary>
+            Constructor to wrap a specific instace of a WebDriver and to set the locator method when interacting with WebElements
+            </summary>
+            <param name="driver">The WebDriver to wrap.</param>
+            <param name="locator">Method for locating elements.</param>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.SetLocator(OpenQA.Selenium.By)">
+            <summary>
+            Sets the locator to use for operations within this instance.
+            </summary>
+            <param name="by">Method to find multiple elements.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.SetTimeout(System.TimeSpan)">
+            <summary>
+            Sets the maximum time that this instance will retry a specific interaction with a group of WebElements before throwing.
+            </summary>
+            <param name="timeout">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.SetTimeoutSeconds(System.Int32)">
+            <summary>
+            Sets the maximum time in seconds that this instance will retry a specific interaction with a group of WebElements before throwing.
+            </summary>
+            <param name="timeoutInSeconds">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.SetPollingInterval(System.TimeSpan)">
+            <summary>
+            Sets the amount of time this instance will wait in between retrying a specific interaction.
+            </summary>
+            <param name="pollingInterval">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.SetPollingIntervalMilliseconds(System.Int32)">
+            <summary>
+            Sets the amount of time in milliseconds this instance will wait in between retrying a specific interaction.
+            </summary>
+            <param name="pollIntervalInMilliseconds">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.SetSearchContext(OpenQA.Selenium.ISearchContext)">
+            <summary>
+            Sets the search context for this element (Driver, element, shadow dom, etc.)
+            </summary>
+            <param name="searchContext">The context to use for all future searches.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.ContainsText(System.String)">
+            <summary>
+            Checks if any element found by <see cref="P:IntelliTect.TestTools.Selenate.ElementBase.Locator"/> contains the matching text.
+            </summary>
+            <param name="text">The text to search for.</param>
+            <returns>True if the text is found; false if it is not.</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.GetElementHandlers">
+            <summary>
+            Returns an ElementHandler as long as a matching DOM item is found, based on XPath or CSS index.
+            Please ensure at least two elements can be found when attempting to use this method.  <br />
+            Respects any timeout set for this ElementsHandler. <br />
+            NOTE: By.Name locators have not yet been verified to work. Please file an issue if one is encountered: https://github.com/IntelliTect/TestTools.Selenate/issues
+            </summary>
+            <returns>The enumerable of ElementHandlers that exist at the time of invocation.</returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.GetSingleWebElement(System.Func{OpenQA.Selenium.IWebElement,System.Boolean})">
+            <summary>
+            Checks if any element found by <see cref="P:IntelliTect.TestTools.Selenate.ElementBase.Locator"/> matches a predicate.
+            </summary>
+            <param name="predicate">The criteria to attempt to match on.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.ElementsHandler.GetAllWebElements(System.Func{OpenQA.Selenium.IWebElement,System.Boolean})">
+            <summary>
+            Gets all elements found by <see cref="P:IntelliTect.TestTools.Selenate.ElementBase.Locator"/>, matching a given predicate. <br />
+            Prefer to use <see cref="M:IntelliTect.TestTools.Selenate.ElementsHandler.GetElementHandlers"/> if you need automatic retries on subsequent actions and know there will be more than one result.
+            </summary>
+            <param name="predicate">The function used to filter to one or more IWebElements</param>
+            <returns>A list of found IWebElements</returns>
+            <exception cref="T:OpenQA.Selenium.NoSuchElementException"></exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="T:IntelliTect.TestTools.Selenate.HandlerBase">
+            <summary>
+            Base class for handling Selenium interactions.
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.HandlerBase.#ctor(OpenQA.Selenium.IWebDriver)">
+            <summary>
+            Base class for handling Selenium interactions.
+            </summary>
+            <param name="driver">The WebDriver needed to driver all of the Selenium interactions</param>
+        </member>
+        <member name="P:IntelliTect.TestTools.Selenate.HandlerBase.WrappedDriver">
+            <summary>
+            The WebDriver this instance is wrapping.
+            </summary>
+        </member>
+        <member name="P:IntelliTect.TestTools.Selenate.HandlerBase.Timeout">
+            <summary>
+            The time it will take for Selenate to stop attempting an action and throw a WebDriverTimeout exception
+            </summary>
+        </member>
+        <member name="P:IntelliTect.TestTools.Selenate.HandlerBase.PollingInterval">
+            <summary>
+            The time to wait in between attempts when invoking Selenium
+            </summary>
+        </member>
+        <member name="P:IntelliTect.TestTools.Selenate.HandlerBase.Wait">
+            <summary>
+            Basic DefaultWait that can be used in many scenarios when constructing WebDriverWaits
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.HandlerBase.SetTimeout``1(System.TimeSpan)">
+            <summary>
+            Sets the maximum time that this instance will retry a specific interaction with Selenium before throwing.
+            </summary>
+            <typeparam name="T">The type for the wrapping class</typeparam>
+            <param name="timeout">Duration to retry an action before throwing.</param>
+            <returns>this</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Throws if <paramref name="timeout"/> is less than 1ms</exception>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.HandlerBase.SetPollingInterval``1(System.TimeSpan)">
+            <summary>
+            Sets the amount of time this instance will wait in between retrying a specific interaction.
+            </summary>
+            <typeparam name="T">The type for the wrapping class</typeparam>
+            <param name="pollingInterval">Time to wait in between retrying an action.</param>
+            <returns>this</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Throws if <paramref name="pollingInterval"/> is less than 1ms</exception>
+        </member>
+        <member name="T:IntelliTect.TestTools.Selenate.WebDriverFactory">
+            <summary>
+            Class for instantiating "everyday" WebDrivers.
+            </summary>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.WebDriverFactory.#ctor(IntelliTect.TestTools.Selenate.BrowserType)">
+            <summary>
+            The type of browser to drive with a Selenium WebDriver.
+            </summary>
+            <param name="browserType">The type of WebDriver to instantiate to drive a specific browser.</param>
+        </member>
+        <member name="M:IntelliTect.TestTools.Selenate.WebDriverFactory.GetDriver">
+            <summary>
+            Gets the driver specified in the constructor. 
+            Do not forget to dispose of your driver after each test or test collection
+            </summary>
+        </member>
+    </members>
+</doc>
